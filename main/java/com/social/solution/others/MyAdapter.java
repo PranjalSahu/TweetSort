@@ -1,6 +1,9 @@
 package com.social.solution.others;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.social.solution.HelperFunctions;
 import com.social.solution.R;
@@ -23,9 +26,6 @@ import com.twitter.sdk.android.tweetui.TweetViewAdapter;
 
 import java.util.List;
 
-import twitter4j.JSONException;
-import twitter4j.JSONObject;
-
 /**
  * Created by pranjal on 29/04/15.
  */
@@ -33,6 +33,7 @@ import twitter4j.JSONObject;
 public class MyAdapter extends TweetViewAdapter {
 
     LayoutInflater inflater         = null;
+    private Context context;
 
     private int mLastPosition = -1;
 
@@ -40,13 +41,12 @@ public class MyAdapter extends TweetViewAdapter {
 
     public MyAdapter(Context context){
         super(context);
-        inflater = LayoutInflater.from(context);
-
+        inflater     = LayoutInflater.from(context);
+        this.context = context;
     }
 
     private void updateTweet(Tweet updateTweet){
         int pos = 0;
-        //R.anim.
         List<Tweet> tl =  this.getTweets();
 
         for(Tweet t:tl){
@@ -54,14 +54,9 @@ public class MyAdapter extends TweetViewAdapter {
                 break;
             ++pos;
         }
-
         tl.set(pos, updateTweet);
         this.setTweets(tl);
-        System.out.println("tweet updated " + updateTweet.id + " old: " + this.getTweetAtPosition(pos).favorited + " new: " + updateTweet.favorited);
-
         this.notifyDataSetChanged();
-
-        System.out.println("tweet updated checking " + this.getTweetAtPosition(pos).id + " " + this.getTweetAtPosition(pos).favorited);
         return;
     }
 
@@ -98,14 +93,32 @@ public class MyAdapter extends TweetViewAdapter {
         return;
     }
 
-    private void getFollowers(){
-
-        //String encodedSearch = URLEncoder.encode(searchTerm, "UTF-8");
-
-    }
-
     private Tweet getTweetAtPosition(int position){
         return this.getItem(position);
+    }
+
+    public void onClickWhatsApp(View view) {
+
+        System.out.println("pranjal whatsapp");
+
+        PackageManager pm = context.getPackageManager();
+        try {
+
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            String text =  ((Tweet) view.getTag()).text;
+
+
+            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, text);
+            context.startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -164,7 +177,11 @@ public class MyAdapter extends TweetViewAdapter {
             iv3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Tweet tempTweet = (Tweet) v.getTag();
+
+
+                    onClickWhatsApp(v);
+
+                    /*Tweet tempTweet = (Tweet) v.getTag();
                     //Toast.makeText(context, tempTweet.user.name, Toast.LENGTH_SHORT).show();
 
                     if (!tempTweet.favorited) {
@@ -198,7 +215,7 @@ public class MyAdapter extends TweetViewAdapter {
                                 //Toast.makeText(context, "UnFavorite Not Done", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    }
+                    }*/
                 }
             });
 
@@ -273,8 +290,14 @@ public class MyAdapter extends TweetViewAdapter {
            child2.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   final Tweet tempTweet = (Tweet) v.getTag();
+
+                   onClickWhatsApp(v);
+
+                   /*final Tweet tempTweet = (Tweet) v.getTag();
                    //Toast.makeText(context, tempTweet.user.name, Toast.LENGTH_SHORT).show();
+
+
+
 
                    if(!tempTweet.favorited)
                        child2.setImageResource(R.drawable.favorite_on);
@@ -320,7 +343,7 @@ public class MyAdapter extends TweetViewAdapter {
                        });
                    } else {
 
-                   }
+                   }*/
                }
            });
 
