@@ -1,6 +1,9 @@
 package com.social.solution.others;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,6 +15,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.social.solution.HelperFunctions;
 import com.social.solution.R;
@@ -97,30 +101,41 @@ public class MyAdapter extends TweetViewAdapter {
 
     public void onClickWhatsApp(View view, View showview) {
 
+        Uri uri = null;
+
         if(showview != null) {
             System.out.println("pranjal whatsapp");
-            Bitmap bmp = HelperFunctions.loadBitmapFromView(context, showview, 100, 100);
-            Uri uri    = HelperFunctions.getImageUri(context, bmp);
-            HelperFunctions.showImage(context, uri);
+            Bitmap bmp = HelperFunctions.loadBitmapFromView(showview);
+            uri    = HelperFunctions.getImageUri(context, bmp);
+            //HelperFunctions.showImage(context, uri);
         }
 
-        /*PackageManager pm = context.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         try {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            String title =  ((Tweet) view.getTag()).text;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, title);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+            PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            shareIntent.setPackage("com.whatsapp");
+            context.startActivity(Intent.createChooser(shareIntent, "Share image via:"));
 
+            /*
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
             String text =  ((Tweet) view.getTag()).text;
-
 
             PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
             waIntent.setPackage("com.whatsapp");
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
-            context.startActivity(Intent.createChooser(waIntent, "Share with"));
+            context.startActivity(Intent.createChooser(waIntent, "Share with"));*/
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {

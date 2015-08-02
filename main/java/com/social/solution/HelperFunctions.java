@@ -365,16 +365,7 @@ public class HelperFunctions {
     };
 
 
-    public static Bitmap loadBitmapFromView(Context context, View v, int width, int height) {
-        /*Bitmap b = Bitmap.createBitmap(500 , 800, Bitmap.Config.ARGB_8888);
-        //Bitmap b = Bitmap.createBitmap(v.getLayoutParams().width , v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        //View vnew = new View(context);
-        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
-        v.draw(c);
-        v.invalidate();
-        v.invalidate();*/
-
+    public static Bitmap loadBitmapFromView(View v) {
         Bitmap bitmap;
         v.setDrawingCacheEnabled(true);
         bitmap = Bitmap.createBitmap(v.getDrawingCache());
@@ -388,6 +379,7 @@ public class HelperFunctions {
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+
     public static void showImage(Context context, Uri uri) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
