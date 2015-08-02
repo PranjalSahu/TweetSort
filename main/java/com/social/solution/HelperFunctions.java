@@ -1,6 +1,12 @@
 package com.social.solution;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
@@ -19,6 +25,7 @@ import com.twitter.sdk.android.core.services.FavoriteService;
 import com.twitter.sdk.android.core.services.SearchService;
 import com.twitter.sdk.android.core.services.StatusesService;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -357,5 +364,35 @@ public class HelperFunctions {
         }
     };
 
+
+    public static Bitmap loadBitmapFromView(Context context, View v, int width, int height) {
+        /*Bitmap b = Bitmap.createBitmap(500 , 800, Bitmap.Config.ARGB_8888);
+        //Bitmap b = Bitmap.createBitmap(v.getLayoutParams().width , v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        //View vnew = new View(context);
+        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+        v.draw(c);
+        v.invalidate();
+        v.invalidate();*/
+
+        Bitmap bitmap;
+        v.setDrawingCacheEnabled(true);
+        bitmap = Bitmap.createBitmap(v.getDrawingCache());
+        v.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public static Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+    public static void showImage(Context context, Uri uri) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "image/*");
+        context.startActivity(intent);
+    }
 
 }

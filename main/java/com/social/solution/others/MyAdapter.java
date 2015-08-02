@@ -1,10 +1,9 @@
 package com.social.solution.others;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.social.solution.HelperFunctions;
 import com.social.solution.R;
@@ -97,11 +95,16 @@ public class MyAdapter extends TweetViewAdapter {
         return this.getItem(position);
     }
 
-    public void onClickWhatsApp(View view) {
+    public void onClickWhatsApp(View view, View showview) {
 
-        System.out.println("pranjal whatsapp");
+        if(showview != null) {
+            System.out.println("pranjal whatsapp");
+            Bitmap bmp = HelperFunctions.loadBitmapFromView(context, showview, 100, 100);
+            Uri uri    = HelperFunctions.getImageUri(context, bmp);
+            HelperFunctions.showImage(context, uri);
+        }
 
-        PackageManager pm = context.getPackageManager();
+        /*PackageManager pm = context.getPackageManager();
         try {
 
             Intent waIntent = new Intent(Intent.ACTION_SEND);
@@ -109,7 +112,7 @@ public class MyAdapter extends TweetViewAdapter {
             String text =  ((Tweet) view.getTag()).text;
 
 
-            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
             waIntent.setPackage("com.whatsapp");
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
@@ -117,8 +120,7 @@ public class MyAdapter extends TweetViewAdapter {
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
-        }
-
+        }*/
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -128,6 +130,7 @@ public class MyAdapter extends TweetViewAdapter {
         System.out.println("getview "+tweet.idStr+" "+tweet.favorited);
 
         if(convertView == null) {
+            //this.getTweetView(this.context, tweet).find
             rowView          = this.getTweetView(this.context, tweet);
             View buttonsRow  = inflater.inflate(R.layout.buttons_row, parent, false);
 
@@ -179,7 +182,7 @@ public class MyAdapter extends TweetViewAdapter {
                 public void onClick(View v) {
 
 
-                    onClickWhatsApp(v);
+                    onClickWhatsApp(v, null);
 
                     /*Tweet tempTweet = (Tweet) v.getTag();
                     //Toast.makeText(context, tempTweet.user.name, Toast.LENGTH_SHORT).show();
@@ -234,6 +237,9 @@ public class MyAdapter extends TweetViewAdapter {
             t2.setEnabled(true);
 
         } else {
+
+            final View checkview = ((BaseTweetView)((LinearLayout)((LinearLayout) convertView).findViewById(R.id.card_view_linear))
+                    .getChildAt(0));
 
             ((BaseTweetView)((LinearLayout)((LinearLayout) convertView).findViewById(R.id.card_view_linear))
                     .getChildAt(0))
@@ -291,7 +297,7 @@ public class MyAdapter extends TweetViewAdapter {
                @Override
                public void onClick(View v) {
 
-                   onClickWhatsApp(v);
+                   onClickWhatsApp(v, checkview);
 
                    /*final Tweet tempTweet = (Tweet) v.getTag();
                    //Toast.makeText(context, tempTweet.user.name, Toast.LENGTH_SHORT).show();
