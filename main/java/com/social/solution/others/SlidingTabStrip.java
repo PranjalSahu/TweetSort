@@ -26,8 +26,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.social.solution.others.SlidingTabLayout;
-
 class SlidingTabStrip extends LinearLayout {
 
     private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 0;
@@ -130,7 +128,7 @@ class SlidingTabStrip extends LinearLayout {
                     height, mSelectedIndicatorPaint);
         }
 
-        // Thin underline along the entire bottom edge
+        // Thin underline along the entire bottom edge 
         canvas.drawRect(0, height - mBottomBorderThickness, getWidth(), height, mBottomBorderPaint);
     }
 
