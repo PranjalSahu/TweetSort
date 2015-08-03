@@ -82,11 +82,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
     @Override
     public void onShowcaseViewHide(ShowcaseView showcaseView) {
-//        if (apiUtils.isCompatWithHoneycomb()) {
-//            listView.setAlpha(1f);
-//        }
-        //buttonBlocked.setText(R.string.button_show);
-        //buttonBlocked.setEnabled(false);
         ++currentShowCase;
 
         if(currentShowCase == 1) {
@@ -117,9 +112,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
     @Override
     public void onShowcaseViewShow(ShowcaseView showcaseView) {
-        //dimView(listView);
-        //buttonBlocked.setText(R.string.button_hide);
-        //buttonBlocked.setEnabled(true);
     }
 
     private boolean isNetworkAvailable() {
@@ -240,7 +232,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.mymenu, menu);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -258,36 +249,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
             }
         }, 5000);
-
-
-//        MenuItem mi = menu.findItem(R.id.sortitemsbyfavorites);
-//        View temp = mi.getActionView();
-//
-//        if(temp == null)
-//            System.out.println("PRANJAL IT IS NULL");
-//        else {
-//            PointTarget target = new PointTarget(temp.getLeft(), temp.getTop());
-
-                //View temp = this.getWindow().getDecorView().findViewById(R.id.sortitemsbyfavorites);
-
-//        View temp  = (ImageButton) menu.findItem(R.id.sortitemsbyfavorites).getActionView();
-//
-//        if(temp == null)
-//            System.out.println("PRANJAL YOYO NULL temp");
-//        else {
-//            ViewTarget target = new ViewTarget(temp);
-//            sv = new ShowcaseView.Builder(this, true)
-//                    .setTarget(target)
-//                    .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
-//                    .setContentText("PRANJAL TESTING TEXT")
-//                    .setStyle(R.style.CustomShowcaseTheme2)
-//                    .setShowcaseEventListener(this)
-//                    .hideOnTouchOutside()
-//                    .build();
-//        }
-                //ViewTarget target = new ViewTarget(R.id.sortitemsbytweet, this);
-
-                //}
         return true;
     }
 
