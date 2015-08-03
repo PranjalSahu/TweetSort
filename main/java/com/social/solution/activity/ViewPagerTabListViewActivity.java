@@ -246,7 +246,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                     .hideOnTouchOutside()
                     .build();
                 }
-
             }
         }, 5000);
         return true;
@@ -260,13 +259,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     public class LoadFriends extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... params) {
-
-//            try {
-//                //System.out.println("PRANJALUSERNAMEIS " + HelperFunctions.twitterStream.getScreenName());
-//            } catch (TwitterException e) {
-//                //System.out.println("PRANJALUSERNAMEIS EXCEPTION");
-//                e.printStackTrace();
-//            }
 
             long nextCursor = -1;
             IDs friendIds   = null;
