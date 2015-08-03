@@ -107,7 +107,7 @@ public class MyAdapter extends TweetViewAdapter {
         Uri uri = null;
 
         if(showview != null) {
-            System.out.println("pranjal whatsapp");
+            //System.out.println("pranjal whatsapp");
             Bitmap bmp = HelperFunctions.loadBitmapFromView(showview);
             uri    = HelperFunctions.getImageUri(context, bmp);
             //HelperFunctions.showImage(context, uri);
@@ -134,7 +134,7 @@ public class MyAdapter extends TweetViewAdapter {
         Object rowView    = convertView;
         final Tweet tweet = this.getItem(position);
 
-        System.out.println("getview " + tweet.idStr + " " + tweet.favorited);
+        //System.out.println("getview " + tweet.idStr + " " + tweet.favorited);
 
         if(convertView == null) {
             //this.getTweetView(this.context, tweet).find
@@ -155,7 +155,7 @@ public class MyAdapter extends TweetViewAdapter {
             iv3.setTag(tweet);
             iv4.setTag(tweet);
 
-            System.out.println("Retweet count: " + tweet.retweetCount + " Favorite count : " + tweet.favoriteCount);
+            //System.out.println("Retweet count: " + tweet.retweetCount + " Favorite count : " + tweet.favoriteCount);
             t1.setText(Integer.toString(tweet.retweetCount));
             t2.setText(Integer.toString(tweet.favoriteCount));
 
@@ -287,7 +287,7 @@ public class MyAdapter extends TweetViewAdapter {
             t1.setTag(tweet);
             t2.setTag(tweet);
 
-            System.out.println("Retweet count: " + Integer.toString(((Tweet) t1.getTag()).retweetCount) + " Favorite count : " + Integer.toString(((Tweet) t2.getTag()).favoriteCount));
+            //System.out.println("Retweet count: " + Integer.toString(((Tweet) t1.getTag()).retweetCount) + " Favorite count : " + Integer.toString(((Tweet) t2.getTag()).favoriteCount));
 
             t1.setText(Integer.toString(((Tweet) t1.getTag()).retweetCount));
             t2.setText(Integer.toString(((Tweet) t2.getTag()).favoriteCount));
@@ -327,8 +327,8 @@ public class MyAdapter extends TweetViewAdapter {
                        HelperFunctions.favoriteService.create(tempTweet.id, false, new Callback<Tweet>() {
                            @Override
                            public void success(Result<Tweet> result) {
-                               System.out.println("vani temp:" + HelperFunctions.gson.toJson(tempTweet));
-                               System.out.println("vani result:" + HelperFunctions.gson.toJson(result.data));
+                               //System.out.println("vani temp:" + HelperFunctions.gson.toJson(tempTweet));
+                               //System.out.println("vani result:" + HelperFunctions.gson.toJson(result.data));
                                String originalJson = HelperFunctions.gson.toJson(tempTweet);
                                String newJson = HelperFunctions.gson.toJson(result.data);
                                JSONObject jsonObjOriginal = null;

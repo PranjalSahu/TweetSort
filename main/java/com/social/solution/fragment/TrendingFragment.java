@@ -115,28 +115,34 @@ public class TrendingFragment extends BaseFragment {
     public class LoadTrends extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... params) {
-            System.out.println("inside loadrecent status");
+            //System.out.println("inside loadrecent status");
             int woeid = 1;
 
             try {
                 ResponseList<twitter4j.Location> locations;
                 trends = new ArrayList<String>();
-                locations = HelperFunctions.twitter.getAvailableTrends();
-                System.out.println("Showing available trends");
-                for (twitter4j.Location location : locations) {
-                    System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
-                    if(location.getName().equalsIgnoreCase("india")) {
-                        woeid = location.getWoeid();
-                        break;
+                if( HelperFunctions.twitter != null) {
+                    locations = HelperFunctions.twitter.getAvailableTrends();
+                    //System.out.println("Showing available trends");
+                    for (twitter4j.Location location : locations) {
+                        System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
+                        if (location.getName().equalsIgnoreCase("india")) {
+                            woeid = location.getWoeid();
+                            break;
+                        }
+                    }
+
+                    Trends newtrends = HelperFunctions.twitter.getPlaceTrends(woeid);
+                    Trend[] newtrend = newtrends.getTrends();
+
+                    for (Trend tr : newtrend) {
+                        //trends.add(tr.getName()+" Query: "+tr.getQuery()+" URL: "+tr.getURL());
+                        trends.add(tr.getName());
                     }
                 }
-
-                Trends newtrends = HelperFunctions.twitter.getPlaceTrends(woeid);
-                Trend[] newtrend = newtrends.getTrends();
-
-                for(Trend tr: newtrend){
-                    //trends.add(tr.getName()+" Query: "+tr.getQuery()+" URL: "+tr.getURL());
-                    trends.add(tr.getName());
+                else{
+                    HelperFunctions.checkAndInit();
+                    new LoadTrends().execute("0", "1");
                 }
             } catch (twitter4j.TwitterException e) {
                 e.printStackTrace();

@@ -199,8 +199,10 @@ public class HelperFunctions {
 
     public static void checkAndInit(){
 
-        if(HelperFunctions.currentSession == null)
+        if(HelperFunctions.currentSession == null) {
+            System.out.println("com.social.solution currentSession is NULL");
             HelperFunctions.currentSession = Twitter.getSessionManager().getActiveSession();
+        }
 
         ConfigurationBuilder config = new ConfigurationBuilder();
         config.setJSONStoreEnabled(true);
@@ -210,16 +212,21 @@ public class HelperFunctions {
         config.setOAuthAccessTokenSecret(HelperFunctions.currentSession.getAuthToken().secret);
         Configuration cf        = config.build();
 
-        if(HelperFunctions.twitter == null)
+        if(HelperFunctions.twitter == null) {
+            System.out.println("com.social.solution HelperFunctions.twitter is NULL");
             HelperFunctions.twitter = new TwitterFactory(cf).getInstance();
+        }
+
 
         if(HelperFunctions.twitterStream == null) {
+            System.out.println("com.social.solution HelperFunctions.twitterStream is NULL");
             HelperFunctions.twitterStream = new TwitterStreamFactory(cf).getInstance();
             HelperFunctions.twitterStream.addListener(listener);
             HelperFunctions.twitterStream.user();
         }
 
         if (HelperFunctions.twitterApiClient == null) {
+            System.out.println("com.social.solution HelperFunctions.twitterApiClient is NULL");
             HelperFunctions.twitterApiClient = new MyTwitterApiClient(HelperFunctions.currentSession);
             HelperFunctions.accountService   = HelperFunctions.twitterApiClient.getAccountService();
             HelperFunctions.statusesService  = HelperFunctions.twitterApiClient.getStatusesService();

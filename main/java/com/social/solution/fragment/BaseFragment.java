@@ -38,8 +38,8 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
         HelperFunctions.checkAndInit();
+        super.onResume();
     }
 
     protected int getActionBarSize() {

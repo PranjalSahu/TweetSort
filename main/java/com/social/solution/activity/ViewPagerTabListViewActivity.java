@@ -200,12 +200,12 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         @Override
         protected String doInBackground(String... params) {
 
-            try {
-                System.out.println("PRANJALUSERNAMEIS " + HelperFunctions.twitterStream.getScreenName());
-            } catch (TwitterException e) {
-                System.out.println("PRANJALUSERNAMEIS EXCEPTION");
-                e.printStackTrace();
-            }
+//            try {
+//                //System.out.println("PRANJALUSERNAMEIS " + HelperFunctions.twitterStream.getScreenName());
+//            } catch (TwitterException e) {
+//                //System.out.println("PRANJALUSERNAMEIS EXCEPTION");
+//                e.printStackTrace();
+//            }
 
             long nextCursor = -1;
             IDs friendIds   = null;
@@ -221,14 +221,14 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                         HelperFunctions.friends.addAll(followers);
                         for(User follower : followers) {
                             HelperFunctions.users.add(follower.getName());
-                            System.out.println("FRIEND " + follower.getId() + " " + follower.getScreenName() + " " + follower.getName());
+                            //System.out.println("FRIEND " + follower.getId() + " " + follower.getScreenName() + " " + follower.getName());
                         }
                         cur = cur+100;
                     }
                     followers = HelperFunctions.twitter.lookupUsers(Arrays.copyOfRange(arr, cur, arr.length));
                     for(User follower : followers) {
                         HelperFunctions.friends.addAll(followers);
-                        System.out.println("FRIEND " + follower.getId() + " " + follower.getScreenName() + " " + follower.getName());
+                        //System.out.println("FRIEND " + follower.getId() + " " + follower.getScreenName() + " " + follower.getName());
                     }
                 } catch (TwitterException e) {
                     e.printStackTrace();
