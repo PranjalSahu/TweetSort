@@ -72,7 +72,9 @@ public class TrendingTweetsActivity extends BaseActivity {
         setContentView(R.layout.trending_tweets);
 
         query               = getIntent().getStringExtra("query");
-        System.out.println("Query is " + query);
+        //query = "Sania Mirza";
+
+        //System.out.println("Query is " + query);
         listView            = (ObservableListView) findViewById(R.id.mylist);
 
         linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);

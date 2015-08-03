@@ -208,8 +208,9 @@ public class MyFragment extends BaseFragment {
 
         this.baseContext      = baseContext;
 
-        if(baseContext == null)
-            System.out.println("PRANJALITISNULLBASEa");
+        if(baseContext == null) {
+            //System.out.println("PRANJALITISNULLBASEa");
+        }
 
     }
 

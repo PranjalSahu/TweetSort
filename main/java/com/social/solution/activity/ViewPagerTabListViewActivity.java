@@ -33,6 +33,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -72,8 +75,28 @@ import twitter4j.User;
  * SlidingTabLayout and SlidingTabStrip are from google/iosched:
  * https://github.com/google/iosched
  */
-public class ViewPagerTabListViewActivity extends BaseActivity implements ObservableScrollViewCallbacks {
+public class ViewPagerTabListViewActivity extends BaseActivity implements ObservableScrollViewCallbacks, OnShowcaseEventListener {
 
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+//        if (apiUtils.isCompatWithHoneycomb()) {
+//            listView.setAlpha(1f);
+//        }
+        //buttonBlocked.setText(R.string.button_show);
+        //buttonBlocked.setEnabled(false);
+    }
+
+    @Override
+    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+    }
+
+    @Override
+    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+        //dimView(listView);
+        //buttonBlocked.setText(R.string.button_hide);
+        //buttonBlocked.setEnabled(true);
+    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -88,6 +111,8 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         setResult(0);
         finish();
     }
+
+    ShowcaseView sv;
 
     SquareImageView picture;
     String profileImageUrl = null;
@@ -332,6 +357,16 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
             public void onPageScrollStateChanged(int i) {
             }
         });
+
+        ViewTarget target = new ViewTarget(R.id.userimage, this);
+        sv = new ShowcaseView.Builder(this, true)
+                .setTarget(target)
+                .setContentTitle("PRANJAL TESTING TITLE")
+                .setContentText("PRANJAL TESTING TEXT")
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .setShowcaseEventListener(this)
+                .build();
+
 
         propagateToolbarState(toolbarIsShown());
     }

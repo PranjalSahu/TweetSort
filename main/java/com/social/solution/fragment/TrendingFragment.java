@@ -125,7 +125,7 @@ public class TrendingFragment extends BaseFragment {
                     locations = HelperFunctions.twitter.getAvailableTrends();
                     //System.out.println("Showing available trends");
                     for (twitter4j.Location location : locations) {
-                        System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
+                        //System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
                         if (location.getName().equalsIgnoreCase("india")) {
                             woeid = location.getWoeid();
                             break;
@@ -169,8 +169,9 @@ public class TrendingFragment extends BaseFragment {
 
         this.baseContext      = baseContext;
 
-        if(baseContext == null)
-            System.out.println("PRANJALITISNULLBASEa");
+        if(baseContext == null) {
+            //System.out.println("PRANJALITISNULLBASEa");
+        }
 
     }
 
