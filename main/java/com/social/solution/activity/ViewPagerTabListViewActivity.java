@@ -89,12 +89,11 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         //buttonBlocked.setEnabled(false);
         ++currentShowCase;
 
-        /*if(currentShowCase == 1) {
+        if(currentShowCase == 1) {
             ViewTarget target = new ViewTarget(R.id.sortitemsbytweet, this);
             sv  = new ShowcaseView.Builder(this, true)
                     .setTarget(target)
                     .setContentTitle("SORT TWEETS BY RETWEET COUNT")
-                            //.setContentText("PRANJAL TESTING TEXT")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener(this)
                     .hideOnTouchOutside()
@@ -105,12 +104,11 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
             sv  = new ShowcaseView.Builder(this, true)
                     .setTarget(target)
                     .setContentTitle("SHOW ORIGINAL TIMELINE")
-                            //.setContentText("PRANJAL TESTING TEXT")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener(this)
                     .hideOnTouchOutside()
                     .build();
-        }*/
+        }
     }
 
     @Override
@@ -252,7 +250,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                     sv = new ShowcaseView.Builder(activityReference, true)
                     .setTarget(target)
                     .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
-                    .setContentText("PRANJAL TESTING TEXT")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener((OnShowcaseEventListener) activityReference)
                     .hideOnTouchOutside()
