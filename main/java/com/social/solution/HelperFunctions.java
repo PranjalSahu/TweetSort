@@ -197,6 +197,20 @@ public class HelperFunctions {
         }
     };
 
+    public static int getRelativeLeft(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getLeft();
+        else
+            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
+    }
+
+    public static int getRelativeTop(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getTop();
+        else
+            return myView.getTop() + getRelativeTop((View) myView.getParent());
+    }
+
     public static void checkAndInit(){
 
         if(HelperFunctions.currentSession == null) {

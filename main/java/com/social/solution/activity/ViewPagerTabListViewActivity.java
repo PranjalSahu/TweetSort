@@ -16,12 +16,14 @@
 
 package com.social.solution.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
@@ -85,6 +87,30 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 //        }
         //buttonBlocked.setText(R.string.button_show);
         //buttonBlocked.setEnabled(false);
+        ++currentShowCase;
+
+        /*if(currentShowCase == 1) {
+            ViewTarget target = new ViewTarget(R.id.sortitemsbytweet, this);
+            sv  = new ShowcaseView.Builder(this, true)
+                    .setTarget(target)
+                    .setContentTitle("SORT TWEETS BY RETWEET COUNT")
+                            //.setContentText("PRANJAL TESTING TEXT")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener(this)
+                    .hideOnTouchOutside()
+                    .build();
+        }
+        else if(currentShowCase == 2) {
+            ViewTarget target = new ViewTarget(R.id.originaltimeline, this);
+            sv  = new ShowcaseView.Builder(this, true)
+                    .setTarget(target)
+                    .setContentTitle("SHOW ORIGINAL TIMELINE")
+                            //.setContentText("PRANJAL TESTING TEXT")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener(this)
+                    .hideOnTouchOutside()
+                    .build();
+        }*/
     }
 
     @Override
@@ -131,6 +157,9 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     protected RequestQueue mRequestQueue;
     protected ImageLoader imageLoader;
 
+    Activity activityReference = null;
+
+    int currentShowCase = 0;
 
     public class LoadProfileImage extends AsyncTask<String, Integer, String> {
         @Override
@@ -213,6 +242,55 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.mymenu, menu);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final View temp = findViewById(R.id.sortitemsbyfavorites);
+                if(temp != null){
+                    ViewTarget target = new ViewTarget(temp);
+                    sv = new ShowcaseView.Builder(activityReference, true)
+                    .setTarget(target)
+                    .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
+                    .setContentText("PRANJAL TESTING TEXT")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener((OnShowcaseEventListener) activityReference)
+                    .hideOnTouchOutside()
+                    .build();
+                }
+
+            }
+        }, 5000);
+
+
+//        MenuItem mi = menu.findItem(R.id.sortitemsbyfavorites);
+//        View temp = mi.getActionView();
+//
+//        if(temp == null)
+//            System.out.println("PRANJAL IT IS NULL");
+//        else {
+//            PointTarget target = new PointTarget(temp.getLeft(), temp.getTop());
+
+                //View temp = this.getWindow().getDecorView().findViewById(R.id.sortitemsbyfavorites);
+
+//        View temp  = (ImageButton) menu.findItem(R.id.sortitemsbyfavorites).getActionView();
+//
+//        if(temp == null)
+//            System.out.println("PRANJAL YOYO NULL temp");
+//        else {
+//            ViewTarget target = new ViewTarget(temp);
+//            sv = new ShowcaseView.Builder(this, true)
+//                    .setTarget(target)
+//                    .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
+//                    .setContentText("PRANJAL TESTING TEXT")
+//                    .setStyle(R.style.CustomShowcaseTheme2)
+//                    .setShowcaseEventListener(this)
+//                    .hideOnTouchOutside()
+//                    .build();
+//        }
+                //ViewTarget target = new ViewTarget(R.id.sortitemsbytweet, this);
+
+                //}
         return true;
     }
 
@@ -278,19 +356,18 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         super.onDestroy();
     }
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpagertab);
 
-        HelperFunctions.TITLES.add(0, "TimeLine");
-        HelperFunctions.TITLES.add(1, "Verified");
-        HelperFunctions.TITLES.add(2, "Trending");
+        activityReference = this;
+
+        if(HelperFunctions.TITLES.size() == 0) {
+            HelperFunctions.TITLES.add(0, "TimeLine");
+            HelperFunctions.TITLES.add(1, "Verified");
+            HelperFunctions.TITLES.add(2, "Trending");
+        }
 
         mRequestQueue = Volley.newRequestQueue(this);
         imageLoader  = new com.mopub.volley.toolbox.ImageLoader(mRequestQueue, new com.mopub.volley.toolbox.ImageLoader.ImageCache() {
@@ -358,14 +435,19 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
             }
         });
 
-        ViewTarget target = new ViewTarget(R.id.userimage, this);
-        sv = new ShowcaseView.Builder(this, true)
-                .setTarget(target)
-                .setContentTitle("PRANJAL TESTING TITLE")
-                .setContentText("PRANJAL TESTING TEXT")
-                .setStyle(R.style.CustomShowcaseTheme2)
-                .setShowcaseEventListener(this)
-                .build();
+        //ViewTarget target = new ViewTarget(R.id.sortitemsbyfavorites, this);
+//        ViewTarget target = new ViewTarget(R.id.userimage, this);
+//
+//        sv = new ShowcaseView.Builder(this, true)
+//                .setTarget(target)
+//                .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
+//                .setContentText("PRANJAL TESTING TEXT")
+//                .setStyle(R.style.CustomShowcaseTheme2)
+//                .setShowcaseEventListener(this)
+//                .hideOnTouchOutside()
+//                .build();
+
+        //ActionViewTarget target = new ActionViewTarget(this, ActionViewTarget.Type.TITLE);
 
 
         propagateToolbarState(toolbarIsShown());
