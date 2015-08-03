@@ -18,6 +18,7 @@ package com.social.solution.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -79,6 +80,7 @@ import twitter4j.User;
  */
 public class ViewPagerTabListViewActivity extends BaseActivity implements ObservableScrollViewCallbacks, OnShowcaseEventListener {
 
+    boolean showIntro = true;
 
     @Override
     public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -103,6 +105,11 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                     .setShowcaseEventListener(this)
                     .hideOnTouchOutside()
                     .build();
+
+
+            SharedPreferences.Editor editor = getSharedPreferences("INTRO", MODE_PRIVATE).edit();
+            editor.putString("introopen", "done");
+            editor.commit();
         }
     }
 
@@ -232,22 +239,25 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.mymenu, menu);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final View temp = findViewById(R.id.sortitemsbyfavorites);
-                if(temp != null){
-                    ViewTarget target = new ViewTarget(temp);
-                    sv = new ShowcaseView.Builder(activityReference, true)
-                    .setTarget(target)
-                    .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
-                    .setStyle(R.style.CustomShowcaseTheme2)
-                    .setShowcaseEventListener((OnShowcaseEventListener) activityReference)
-                    .hideOnTouchOutside()
-                    .build();
+
+        if(showIntro) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    final View temp = findViewById(R.id.sortitemsbyfavorites);
+                    if (temp != null) {
+                        ViewTarget target = new ViewTarget(temp);
+                        sv = new ShowcaseView.Builder(activityReference, true)
+                                .setTarget(target)
+                                .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
+                                .setStyle(R.style.CustomShowcaseTheme2)
+                                .setShowcaseEventListener((OnShowcaseEventListener) activityReference)
+                                .hideOnTouchOutside()
+                                .build();
+                    }
                 }
-            }
-        }, 5000);
+            }, 5000);
+        }
         return true;
     }
 
@@ -310,6 +320,11 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpagertab);
+
+        SharedPreferences prefs = getSharedPreferences("INTRO", MODE_PRIVATE);
+        String restoredText     = prefs.getString("introopen", null);
+        if (restoredText != null)
+            showIntro = false;
 
         activityReference = this;
 
