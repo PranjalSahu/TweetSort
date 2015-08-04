@@ -59,7 +59,7 @@ public class TweetBank {
 
     public static List<Tweet> getOlderThan(Long id){
         List<Tweet> tempList  = new ArrayList<Tweet>();
-        System.out.println("id: "+id +" lastTweetId: "+lasttweetid);
+        //System.out.println("id: "+id +" lastTweetId: "+lasttweetid);
         for (Tweet t: tweetlist) {         // TODO make it binary search
             if(t.id < id)
                 tempList.add(t);

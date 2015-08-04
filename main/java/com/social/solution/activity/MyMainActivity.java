@@ -54,7 +54,7 @@ public class MyMainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        System.out.println("HELLO PRANJAL");
+        //System.out.println("HELLO PRANJAL");
         String TWITTER_KEY = "i8lsarVzM1RLdQli7JvGibJya";
         String TWITTER_SECRET = "ivA141Pewjx3VYfKOUBMIRJZZnNhPQNW9gVdM1nlXrnsNmir29";
 
@@ -77,15 +77,15 @@ public class MyMainActivity extends AppCompatActivity {
 //        testObject.saveInBackground();
 
 
-        System.out.println("zooweemama");
+        //System.out.println("zooweemama");
         if (currentSession == null) {
-            System.out.println("NULL POINTER EXCEPTION");
+            //System.out.println("NULL POINTER EXCEPTION");
             Intent intent = new Intent(MyMainActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, 1);
             //appState.startActivity(intent);
         } else {
-            System.out.println("Pranjal testing");
+            //System.out.println("Pranjal testing");
             Intent intent = new Intent(MyMainActivity.this, ViewPagerTabListViewActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, 1);

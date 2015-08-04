@@ -113,11 +113,11 @@ public class TrendingTweetsActivity extends BaseActivity {
                     @Override
                     public void success(Result<Search> result) {
                         List<Tweet> ls = result.data.tweets;
-                        System.out.println("tweetsearch size = "+ls.size());
+                        //System.out.println("tweetsearch size = "+ls.size());
                         if (ls.size() > 0) {
                             tweetlist.addAll(ls);
                             for(Tweet t:ls){
-                                System.out.println("tweetsearch count checking :" + t.retweetCount+ " "+t.favoriteCount);
+                                //System.out.println("tweetsearch count checking :" + t.retweetCount+ " "+t.favoriteCount);
                             }
                         }
                         displayTweets();
@@ -135,7 +135,7 @@ public class TrendingTweetsActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.mymenutrend, menu);
-        System.out.println("pranjal menu has visible items " + menu.hasVisibleItems());
+        //System.out.println("pranjal menu has visible items " + menu.hasVisibleItems());
         return true;
     }
 
@@ -183,7 +183,7 @@ public class TrendingTweetsActivity extends BaseActivity {
             return true;
         }
         else if(id == android.R.id.home) {
-            System.out.println("pranjalsahu TrendingTweetsActivity");
+            //System.out.println("pranjalsahu TrendingTweetsActivity");
             this.finish();
             overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             return true;

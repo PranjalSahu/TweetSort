@@ -167,7 +167,7 @@ public class MyFragment extends BaseFragment {
     public class LoadStatuses extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... params) {
-            System.out.println("inside loadrecent status");
+            //System.out.println("inside loadrecent status");
             try {
                 List<twitter4j.Status> statuses = null;
                 String user;
@@ -180,11 +180,11 @@ public class MyFragment extends BaseFragment {
                 //System.out.println("Showing @" + user + "'s user timeline.");
                 for (twitter4j.Status status : statuses) {
                     //status.
-                    System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText()+" vanitweet "+status.toString());
+                    //System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText()+" vanitweet "+status.toString());
                 }
             } catch (TwitterException te) {
                 te.printStackTrace();
-                System.out.println("Failed to get timeline: " + te.getMessage());
+                //System.out.println("Failed to get timeline: " + te.getMessage());
             }
 
             return null;
@@ -236,7 +236,7 @@ public class MyFragment extends BaseFragment {
             public void onRefresh() {
                 long currentTimeStamp = System.currentTimeMillis();
                 if((currentTimeStamp - lastTimeStamp)/1000 >10) {
-                    System.out.println("load recent pranjal");
+                    //System.out.println("load recent pranjal");
                     LoadRecentTweets();
                 }
 
@@ -257,7 +257,7 @@ public class MyFragment extends BaseFragment {
         }
 
         //Toast.makeText(this, "Filter : "+filterTweets+" Position : "+position, Toast.LENGTH_SHORT).show();
-        System.out.println("Filter : " + filterTweets + " Position : " + position);
+        //System.out.println("Filter : " + filterTweets + " Position : " + position);
 
         linlaHeaderProgress = (LinearLayout) view.findViewById(R.id.linlaHeaderProgress);
         listView            = (ObservableListView) view.findViewById(R.id.mylist);
@@ -337,7 +337,7 @@ public class MyFragment extends BaseFragment {
 
     boolean checkToLoad(){
         int sizeOfDb = TweetBank.sqlitehelper.getSizeOfDB(TweetBank.WriteAbleDB);
-        System.out.println("SIZE DIFFERENCE IS " + sizeOfDb + " " + tweetlist.size());
+        //System.out.println("SIZE DIFFERENCE IS " + sizeOfDb + " " + tweetlist.size());
         if(sizeOfDb - tweetlist.size() < 50)
             return true;
         else
@@ -350,7 +350,7 @@ public class MyFragment extends BaseFragment {
         mAdAdapter.loadAds(MY_AD_UNIT_ID, mRequestParameters);
         footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 0));
         loadingTweets.clear();
-        System.out.println("Size of tweelist is " + tweetlist.size());
+        //System.out.println("Size of tweelist is " + tweetlist.size());
         linlaHeaderProgress.setVisibility(View.GONE);//linlaHeaderProgress.getvisi
         loading = false;
     }
@@ -382,7 +382,7 @@ public class MyFragment extends BaseFragment {
 
     void LoadRecentTweets(){
 
-        System.out.println("inside loadrecent status A");
+        //System.out.println("inside loadrecent status A");
 
         //new LoadStatuses().execute("0", "1");
         lastTimeStamp = System.currentTimeMillis();
@@ -532,7 +532,7 @@ public class MyFragment extends BaseFragment {
                             @Override
                             public void failure(TwitterException exception) {
                                 exception.printStackTrace();
-                                System.out.println("EXCEPTION FAILED TWITTER");
+                                //System.out.println("EXCEPTION FAILED TWITTER");
                                 lastTimeStamp = System.currentTimeMillis();
                                 displayTweetsFirst();
                                 // TODO make this toast when the internet connection is not present
@@ -556,7 +556,7 @@ public class MyFragment extends BaseFragment {
         loading     = true;
         listView.addFooterView(footer);
 
-        System.out.println("LOADING LOADING LOADING LOADING");
+        //System.out.println("LOADING LOADING LOADING LOADING");
 
         HelperFunctions.statusesService.homeTimeline(150, null, TweetBank.lasttweetid, false, true, false, true,
                 new Callback<List<Tweet>>() {
@@ -579,7 +579,7 @@ public class MyFragment extends BaseFragment {
                     @Override
                     public void failure(TwitterException exception) {
                         exception.printStackTrace();
-                        System.out.println("EXCEPTION FAILED TWITTER");
+                        //System.out.println("EXCEPTION FAILED TWITTER");
                         lastTimeStamp = System.currentTimeMillis();
                         displayTweets();
                         listView.removeFooterView(footer);

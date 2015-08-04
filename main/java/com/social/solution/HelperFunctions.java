@@ -76,11 +76,11 @@ public class HelperFunctions {
         @Override
         public void onStatus(Status status) {
             //TweetBank.insertTweet(t);
-            System.out.println("onStatus @" + status.getUser().getScreenName() + " - " + status.getText());
+            //System.out.println("onStatus @" + status.getUser().getScreenName() + " - " + status.getText());
             String statusJson = TwitterObjectFactory.getRawJSON(status);
-            System.out.println("rawjson "+statusJson);
+            //System.out.println("rawjson "+statusJson);
             Tweet updatedTweet  = HelperFunctions.gson.fromJson(statusJson, Tweet.class);
-            System.out.println("rawjson updateTweet is "+updatedTweet.text);
+            //System.out.println("rawjson updateTweet is "+updatedTweet.text);
             TweetBank.insertTweet(updatedTweet);
         }
 
@@ -91,7 +91,7 @@ public class HelperFunctions {
 
         @Override
         public void onFavorite(User source, User target, Status favoritedStatus) {
-            System.out.println("PRANJALUSERNAMEIS favorite some tweet");
+            //System.out.println("PRANJALUSERNAMEIS favorite some tweet");
 
         }
 
@@ -102,7 +102,7 @@ public class HelperFunctions {
 
         @Override
         public void onFollow(User source, User followedUser) {
-            System.out.println("PRANJALUSERNAMEIS followed someone");
+            //System.out.println("PRANJALUSERNAMEIS followed someone");
 
         }
 
@@ -168,32 +168,32 @@ public class HelperFunctions {
 
         @Override
         public void onException(Exception ex) {
-            System.out.println("PRANJALUSERNAMEIS exception");
+            //System.out.println("PRANJALUSERNAMEIS exception");
         }
 
         @Override
         public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-            System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
+            //System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
         }
 
         @Override
         public void onDeletionNotice(long directMessageId, long userId) {
-            System.out.println("Got a direct message deletion notice id:" + directMessageId);
+            //System.out.println("Got a direct message deletion notice id:" + directMessageId);
         }
 
         @Override
         public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-            System.out.println("Got a track limitation notice:" + numberOfLimitedStatuses);
+            //System.out.println("Got a track limitation notice:" + numberOfLimitedStatuses);
         }
 
         @Override
         public void onScrubGeo(long userId, long upToStatusId) {
-            System.out.println("Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
+            //System.out.println("Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
         }
 
         @Override
         public void onStallWarning(StallWarning warning) {
-            System.out.println("Got stall warning:" + warning);
+            //System.out.println("Got stall warning:" + warning);
         }
     };
 
@@ -214,7 +214,7 @@ public class HelperFunctions {
     public static void checkAndInit(){
 
         if(HelperFunctions.currentSession == null) {
-            System.out.println("com.social.solution currentSession is NULL");
+            //System.out.println("com.social.solution currentSession is NULL");
             HelperFunctions.currentSession = Twitter.getSessionManager().getActiveSession();
         }
 
@@ -227,20 +227,20 @@ public class HelperFunctions {
         Configuration cf        = config.build();
 
         if(HelperFunctions.twitter == null) {
-            System.out.println("com.social.solution HelperFunctions.twitter is NULL");
+            //System.out.println("com.social.solution HelperFunctions.twitter is NULL");
             HelperFunctions.twitter = new TwitterFactory(cf).getInstance();
         }
 
 
         if(HelperFunctions.twitterStream == null) {
-            System.out.println("com.social.solution HelperFunctions.twitterStream is NULL");
+            //System.out.println("com.social.solution HelperFunctions.twitterStream is NULL");
             HelperFunctions.twitterStream = new TwitterStreamFactory(cf).getInstance();
             HelperFunctions.twitterStream.addListener(listener);
             HelperFunctions.twitterStream.user();
         }
 
         if (HelperFunctions.twitterApiClient == null) {
-            System.out.println("com.social.solution HelperFunctions.twitterApiClient is NULL");
+            //System.out.println("com.social.solution HelperFunctions.twitterApiClient is NULL");
             HelperFunctions.twitterApiClient = new MyTwitterApiClient(HelperFunctions.currentSession);
             HelperFunctions.accountService   = HelperFunctions.twitterApiClient.getAccountService();
             HelperFunctions.statusesService  = HelperFunctions.twitterApiClient.getStatusesService();
@@ -272,12 +272,12 @@ public class HelperFunctions {
         if(position == 1)                       // for verified tweets
             return t.user.verified;
 
-        System.out.println("YOYO "+t.user.name);
+        //System.out.println("YOYO "+t.user.name);
         boolean flag = false;
         ArrayList<String> userList = filterList.get(position);
         for(int i=0;i<userList.size();++i){
             if(t.user.name.contains(userList.get(i))) {
-                System.out.println("PRANJAL match username : "+t.user.name+" userlist : "+userList.get(i));
+                //System.out.println("PRANJAL match username : "+t.user.name+" userlist : "+userList.get(i));
                 return true;
             }
         }

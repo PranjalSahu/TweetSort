@@ -138,7 +138,7 @@ public class MyImageFragment extends BaseFragment {
         newsrowslist.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("pranjal danger");
+                //System.out.println("pranjal danger");
                 return false;
             }
         });
