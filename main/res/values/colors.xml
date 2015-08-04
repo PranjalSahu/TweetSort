@@ -17,7 +17,7 @@
     <!--#009688 #00796b #eeff41 #F4FF81-->
     <color name="primary">#18376a</color>
     <color name="primaryDark">#18376a</color>
-    <color name="accent">#18376a</color>
+    <color name="accent">#1e4586</color>
     <color name="underlinecolor">#FFFFFF</color>
     <color name="accentLight">#18376a</color>
     <color name="selectcolor">#D3D3D3</color>
