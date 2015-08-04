@@ -44,6 +44,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.melnykov.fab.FloatingActionButton;
 import com.mopub.volley.RequestQueue;
 import com.mopub.volley.toolbox.ImageLoader;
 import com.mopub.volley.toolbox.Volley;
@@ -438,6 +439,9 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
     @Override
     public void onDownMotionEvent() {
+
+        //View fab = findViewById(R.id.fab);
+        //fab.setVisibility(View.INVISIBLE);
         //System.out.println("ViewPagerTabListViewActivity onDownMotionEvent");
 
     }
@@ -487,15 +491,19 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     }
 
     private Fragment getCurrentFragment() {
-        Fragment fg = mPagerAdapter.getItemAt(mPager.getCurrentItem());
+        Fragment fg              = mPagerAdapter.getItemAt(mPager.getCurrentItem());
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         if(fg instanceof MyImageFragment) {
+            //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            //fab.attachToListView(fg.);
             return (MyImageFragment) fg;
         }
         else if(fg instanceof TrendingFragment){
             return  (TrendingFragment) fg;
         }
         else{
+            fab.attachToListView(((MyFragment) fg).listView);
             return (MyFragment) fg;
         }
     }
