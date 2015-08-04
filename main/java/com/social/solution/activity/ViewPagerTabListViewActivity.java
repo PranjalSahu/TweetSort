@@ -150,6 +150,7 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
     private NavigationAdapter mPagerAdapter;
     SlidingTabLayout slidingTabLayout;
 
+    FloatingActionButton fab;
     public static Context baseContext = null;
 
     String username                  = null;
@@ -324,7 +325,7 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpagertab);
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -484,10 +485,13 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         int scrollY = listView.getCurrentScrollY();
         if (scrollState == ScrollState.DOWN) {
             showToolbar();
+            fab.show();
         } else if (scrollState == ScrollState.UP) {
             if (toolbarHeight <= scrollY) {
                 hideToolbar();
+                fab.hide();
             } else {
+                fab.show();
                 showToolbar();
             }
         } else {
@@ -500,6 +504,7 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                 // Toolbar is moving but doesn't know which to move:
                 // you can change this to hideToolbar()
                 showToolbar();
+                fab.show();
             }
         }
     }
@@ -509,7 +514,7 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         if(fg instanceof MyImageFragment) {
-            //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            //MyFloatingActionButton fab = (MyFloatingActionButton) findViewById(R.id.fab);
             //fab.attachToListView(fg.);
             return (MyImageFragment) fg;
         }
@@ -517,7 +522,8 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
             return  (TrendingFragment) fg;
         }
         else{
-            fab.attachToListView(((MyFragment) fg).listView);
+            //fab.attachToListView(((MyFragment) fg).listView);
+            ((MyFragment) fg).mySetOnScrollListener();
             return (MyFragment) fg;
         }
     }

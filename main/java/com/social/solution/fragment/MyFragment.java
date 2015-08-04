@@ -43,11 +43,11 @@ import com.mopub.nativeads.MoPubNativeAdRenderer;
 import com.mopub.nativeads.RequestParameters;
 import com.mopub.nativeads.ViewBinder;
 import com.social.solution.HelperFunctions;
+import com.social.solution.R;
 import com.social.solution.others.MyAdapter;
+import com.social.solution.others.TweetBank;
 import com.social.solution.unused.MyApplication;
 import com.social.solution.unused.MySQLiteHelper;
-import com.social.solution.R;
-import com.social.solution.others.TweetBank;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -302,7 +302,7 @@ public class MyFragment extends BaseFragment {
             // This is a workaround for the issue #117:
             // https://github.com/ksoichiro/Android-ObservableScrollView/issues/117
             listView.setTouchInterceptionViewGroup((ViewGroup) parentActivity.findViewById(R.id.root));
-
+            //listView.
             listView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
         }
 
@@ -319,7 +319,6 @@ public class MyFragment extends BaseFragment {
 
         lastDisplayTweetId  = Long.MAX_VALUE;
         firstDisplayTweetId = Long.MIN_VALUE;
-
         return view;
     }
 
@@ -356,19 +355,22 @@ public class MyFragment extends BaseFragment {
     }
 
 
-    public void mySetOnScrollListener(final Activity activity){
+    public void mySetOnScrollListener(){
 
         if(listenerObject == null) {
             listenerObject = new AbsListView.OnScrollListener() {
+
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    System.out.println("scrollstate "+scrollState);
                 }
+
 
                 public void onScroll(AbsListView view, int firstVisibleItem,
                                      int visibleItemCount, int totalItemCount) {
 
                     int visibleThreshold = 2;
                     long currentTimeStamp = System.currentTimeMillis();
-                    //System.out.println("firstVisibleItem "+firstVisibleItem+" visibleItemCount "+visibleItemCount+" totalItemCount "+totalItemCount+" (totalItemCount - visibleItemCount) "+(totalItemCount - visibleItemCount)+" (firstVisibleItem + visibleThreshold) "+(firstVisibleItem + visibleThreshold));
+                    System.out.println("firstVisibleItem "+firstVisibleItem+" visibleItemCount "+visibleItemCount+" totalItemCount "+totalItemCount+" (totalItemCount - visibleItemCount) "+(totalItemCount - visibleItemCount)+" (firstVisibleItem + visibleThreshold) "+(firstVisibleItem + visibleThreshold));
                     if ((currentTimeStamp - lastTimeStamp)/1000 >10 && loading == false && totalItemCount > 5 && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                         LoadOldTweets();
                         //footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 70));
@@ -381,42 +383,10 @@ public class MyFragment extends BaseFragment {
     }
 
     void LoadRecentTweets(){
-
-        //System.out.println("inside loadrecent status A");
-
-        //new LoadStatuses().execute("0", "1");
         lastTimeStamp = System.currentTimeMillis();
         displayTweetsRecent();
-        downloading = false;
-
-        /*
-        HelperFunctions.statusesService.homeTimeline(50, TweetBank.firsttweetid, null, false, true, false, true,
-                new Callback<List<Tweet>>() {
-                    @Override
-                    public void success(Result<List<Tweet>> result) {
-                        List<Tweet> ls = result.data;
-                        if (ls.size() > 0) {
-                            for (int i = 0; i < ls.size(); ++i) {
-                                Tweet t = ls.get(i);
-                                TweetBank.insertTweet(t);
-                            }
-                        }
-                        lastTimeStamp = System.currentTimeMillis();
-
-                        displayTweetsRecent();
-                        downloading = false;
-                        mSwipeLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        exception.printStackTrace();
-                        lastTimeStamp = System.currentTimeMillis();
-
-                        displayTweetsRecent();
-                    }
-                }
-        );*/
+        downloading   = false;
+        mSwipeLayout.setRefreshing(false);
     }
 
     public void displayTweetsRecent(){
@@ -476,10 +446,12 @@ public class MyFragment extends BaseFragment {
         tweetlist.addAll(filteredTweets);
         tempTweetList.addAll(filteredTweets);
         tweetadapter.notifyDataSetChanged();
-        mySetOnScrollListener(storedActivity);
+        //mySetOnScrollListener();
     }
 
     public void displayTweetsFirst(){
+        mySetOnScrollListener();
+
         tweetlist.addAll(getFiltered());
 
         tweetadapter.setTweets(tweetlist);
@@ -488,7 +460,7 @@ public class MyFragment extends BaseFragment {
         tweetadapter.notifyDataSetChanged();
         mAdAdapter.loadAds(MY_AD_UNIT_ID, mRequestParameters);
 
-        mySetOnScrollListener(storedActivity);
+        //mySetOnScrollListener();
 
         listView.addFooterView(footer);
         listView.removeFooterView(footer);
@@ -505,8 +477,8 @@ public class MyFragment extends BaseFragment {
         loading     = true;
 
         Handler handlerTimer = new Handler();
-        handlerTimer.postDelayed(new Runnable() {
-            public void run() {
+        //handlerTimer.postDelayed(new Runnable() {
+          //  public void run() {
                 HelperFunctions.statusesService.homeTimeline(150, null, TweetBank.lasttweetid, false, true, false, true,
                         new Callback<List<Tweet>>() {
                             @Override
@@ -544,8 +516,8 @@ public class MyFragment extends BaseFragment {
                             }
                         }
                 );
-            }
-        }, 2000);
+          //  }
+        //}, 2000);
 
 
 
