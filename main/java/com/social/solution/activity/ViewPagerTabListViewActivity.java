@@ -18,6 +18,7 @@ package com.social.solution.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -33,6 +34,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -322,6 +324,23 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpagertab);
 
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    int TWEET_COMPOSER_REQUEST_CODE = 100;
+                    Intent intent = new TweetComposer.Builder(baseContext)
+                            .text("What's on your mind")
+                            .createIntent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivityForResult(intent, TWEET_COMPOSER_REQUEST_CODE);
+                }
+                return false;
+            }
+        });
+
+
         SharedPreferences prefs = getSharedPreferences("INTRO", MODE_PRIVATE);
         String restoredText     = prefs.getString("introopen", null);
         if (restoredText != null)
@@ -439,11 +458,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
     @Override
     public void onDownMotionEvent() {
-
-        //View fab = findViewById(R.id.fab);
-        //fab.setVisibility(View.INVISIBLE);
-        //System.out.println("ViewPagerTabListViewActivity onDownMotionEvent");
-
     }
 
     @Override
