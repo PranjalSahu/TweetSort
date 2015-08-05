@@ -18,7 +18,6 @@ package com.social.solution.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,8 +28,8 @@ import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.social.solution.HelperFunctions;
-import com.social.solution.others.MyAdapter;
 import com.social.solution.R;
+import com.social.solution.others.MyAdapter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -94,8 +93,8 @@ public class TrendingTweetsActivity extends BaseActivity {
 
         //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        mHeaderView = findViewById(R.id.header);
-        ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
+        //mHeaderView = findViewById(R.id.header);
+        //ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
 
         tweetlist = new ArrayList<Tweet>();
         LoadTrendingTweets();
