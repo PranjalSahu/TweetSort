@@ -96,7 +96,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                     .setContentTitle("SORT TWEETS BY RETWEET COUNT")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener(this)
-                    .hideOnTouchOutside()
                     .build();
         }
         else if(currentShowCase == 2) {
@@ -106,7 +105,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                     .setContentTitle("SHOW ORIGINAL TIMELINE")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener(this)
-                    .hideOnTouchOutside()
                     .build();
 
 
@@ -256,7 +254,6 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
                                 .setContentTitle("SORT TWEETS BY FAVORITE COUNT")
                                 .setStyle(R.style.CustomShowcaseTheme2)
                                 .setShowcaseEventListener((OnShowcaseEventListener) activityReference)
-                                .hideOnTouchOutside()
                                 .build();
                     }
                 }
