@@ -234,6 +234,8 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
             }
             return true;
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -377,9 +379,7 @@ public class ViewPagerTabListViewActivity extends BaseActivity implements Observ
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        //new LoadFriends().execute("0", "1");
-
-        HelperFunctions.checkAndInit();
+        HelperFunctions.checkAndInit(this);
 
         username = HelperFunctions.currentSession.getUserName();
 

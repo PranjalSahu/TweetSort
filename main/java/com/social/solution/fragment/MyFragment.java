@@ -24,7 +24,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,10 +68,6 @@ import twitter4j.conf.ConfigurationBuilder;
 public class MyFragment extends BaseFragment {
 
     public static final String ARG_INITIAL_POSITION = "ARG_INITIAL_POSITION";
-
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY    = "i8lsarVzM1RLdQli7JvGibJya";
-    private static final String TWITTER_SECRET = "ivA141Pewjx3VYfKOUBMIRJZZnNhPQNW9gVdM1nlXrnsNmir29";
 
     MyApplication appState;
 
@@ -161,6 +156,7 @@ public class MyFragment extends BaseFragment {
 
         storedActivity = activity;
 
+        HelperFunctions.checkAndInit(storedActivity);
         LoadFirst();
     }
 
@@ -476,51 +472,43 @@ public class MyFragment extends BaseFragment {
         downloading = true;
         loading     = true;
 
-        Handler handlerTimer = new Handler();
-        //handlerTimer.postDelayed(new Runnable() {
-          //  public void run() {
-                HelperFunctions.statusesService.homeTimeline(150, null, TweetBank.lasttweetid, false, true, false, true,
-                        new Callback<List<Tweet>>() {
-                            @Override
-                            public void success(Result<List<Tweet>> result) {
-                                List<Tweet> ls = result.data;
-                                if (ls.size() > 0) {
-                                    for (int i = 0; i < ls.size(); ++i) {
-                                        Tweet t = ls.get(i);
-                                        TweetBank.insertTweet(t);
-                                    }
-                                }
-
-                                lastTimeStamp = System.currentTimeMillis();
-
-                                //lastDisplayTweetId  = TweetBank.lasttweetid;
-                                //firstDisplayTweetId = TweetBank.firsttweetid;
-
-                                displayTweetsFirst();
-                                downloading = false;
-                                loading = false;
-                            }
-
-                            @Override
-                            public void failure(TwitterException exception) {
-                                exception.printStackTrace();
-                                //System.out.println("EXCEPTION FAILED TWITTER");
-                                lastTimeStamp = System.currentTimeMillis();
-                                displayTweetsFirst();
-                                // TODO make this toast when the internet connection is not present
-                                //Toast.makeText(storedActivity, "Check Network connectivity", Toast.LENGTH_LONG).show();
-                                linlaHeaderProgress.setVisibility(View.GONE);
-                                listView.removeFooterView(footer);
-                                loading = false;
-                                downloading = false;
+        HelperFunctions.statusesService.homeTimeline(150, null, TweetBank.lasttweetid, false, true, false, true,
+                new Callback<List<Tweet>>() {
+                    @Override
+                    public void success(Result<List<Tweet>> result) {
+                        List<Tweet> ls = result.data;
+                        if (ls.size() > 0) {
+                            for (int i = 0; i < ls.size(); ++i) {
+                                Tweet t = ls.get(i);
+                                TweetBank.insertTweet(t);
                             }
                         }
-                );
-          //  }
-        //}, 2000);
 
+                        lastTimeStamp = System.currentTimeMillis();
 
+                        //lastDisplayTweetId  = TweetBank.lasttweetid;
+                        //firstDisplayTweetId = TweetBank.firsttweetid;
 
+                        displayTweetsFirst();
+                        downloading = false;
+                        loading = false;
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        exception.printStackTrace();
+                        //System.out.println("EXCEPTION FAILED TWITTER");
+                        lastTimeStamp = System.currentTimeMillis();
+                        displayTweetsFirst();
+                        // TODO make this toast when the internet connection is not present
+                        //Toast.makeText(storedActivity, "Check Network connectivity", Toast.LENGTH_LONG).show();
+                        linlaHeaderProgress.setVisibility(View.GONE);
+                        listView.removeFooterView(footer);
+                        loading = false;
+                        downloading = false;
+                    }
+                }
+        );
     }
 
     public void LoadOldTweets() {

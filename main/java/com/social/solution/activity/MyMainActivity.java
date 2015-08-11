@@ -20,11 +20,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.social.solution.HelperFunctions;
+import com.social.solution.others.Keys;
 import com.social.solution.others.MyTwitterApiClient;
-import com.social.solution.unused.MyApplication;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.tweetui.TweetUi;
 
 import io.fabric.sdk.android.Fabric;
@@ -36,9 +36,6 @@ public class MyMainActivity extends AppCompatActivity {
 
     MyTwitterApiClient twitterApiClient;
     String username                  = null;
-
-    TwitterAuthConfig   authConfig     = null;
-    TwitterSession      currentSession = null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -54,17 +51,13 @@ public class MyMainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //System.out.println("HELLO PRANJAL");
-        String TWITTER_KEY = "i8lsarVzM1RLdQli7JvGibJya";
-        String TWITTER_SECRET = "ivA141Pewjx3VYfKOUBMIRJZZnNhPQNW9gVdM1nlXrnsNmir29";
 
-        authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+        HelperFunctions.authConfig = new TwitterAuthConfig(Keys.TWITTER_KEY, Keys.TWITTER_SECRET);
+        Fabric.with(this, new Twitter(HelperFunctions.authConfig));
         Fabric.with(this, new TweetUi());
         //Fabric.with(this, new TweetComposer(), new Crashlytics());
 
-        MyApplication appState = ((MyApplication) getApplicationContext());
-        currentSession = Twitter.getSessionManager().getActiveSession();
+        HelperFunctions.currentSession = Twitter.getSessionManager().getActiveSession();
 
 //        // Enable Local Datastore.
 //        Parse.enableLocalDatastore(this);
@@ -77,19 +70,14 @@ public class MyMainActivity extends AppCompatActivity {
 //        testObject.saveInBackground();
 
 
-        //System.out.println("zooweemama");
-        if (currentSession == null) {
-            //System.out.println("NULL POINTER EXCEPTION");
+        if (HelperFunctions.currentSession == null) {
             Intent intent = new Intent(MyMainActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, 1);
-            //appState.startActivity(intent);
         } else {
-            //System.out.println("Pranjal testing");
             Intent intent = new Intent(MyMainActivity.this, ViewPagerTabListViewActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, 1);
-            //appState.startActivity(intent);
         }
 
     }

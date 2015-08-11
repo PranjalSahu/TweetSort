@@ -24,6 +24,7 @@ import com.twitter.sdk.android.core.services.AccountService;
 import com.twitter.sdk.android.core.services.FavoriteService;
 import com.twitter.sdk.android.core.services.SearchService;
 import com.twitter.sdk.android.core.services.StatusesService;
+import com.twitter.sdk.android.tweetui.TweetUi;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import twitter4j.DirectMessage;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -211,7 +213,13 @@ public class HelperFunctions {
             return myView.getTop() + getRelativeTop((View) myView.getParent());
     }
 
-    public static void checkAndInit(){
+    public static void checkAndInit(Context context){
+
+        if(HelperFunctions.authConfig == null) {
+            HelperFunctions.authConfig = new TwitterAuthConfig(Keys.TWITTER_KEY, Keys.TWITTER_SECRET);
+            Fabric.with(context, new Twitter(HelperFunctions.authConfig));
+            Fabric.with(context, new TweetUi());
+        }
 
         if(HelperFunctions.currentSession == null) {
             //System.out.println("com.social.solution currentSession is NULL");

@@ -141,7 +141,7 @@ public class TrendingFragment extends BaseFragment {
                     }
                 }
                 else{
-                    HelperFunctions.checkAndInit();
+                    HelperFunctions.checkAndInit(storedActivity);
                     new LoadTrends().execute("0", "1");
                 }
             } catch (twitter4j.TwitterException e) {

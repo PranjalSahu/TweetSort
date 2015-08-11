@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onResume() {
-        HelperFunctions.checkAndInit();
+        HelperFunctions.checkAndInit(this.getActivity());
         super.onResume();
     }
 
