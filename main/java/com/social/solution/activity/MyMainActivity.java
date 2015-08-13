@@ -59,7 +59,7 @@ public class MyMainActivity extends AppCompatActivity {
 
         HelperFunctions.currentSession = Twitter.getSessionManager().getActiveSession();
 
-//        // Enable Local Datastore.
+        // Enable Local Datastore.
 //        Parse.enableLocalDatastore(this);
 //        Parse.initialize(this, "RO9EX10OE04h3ZEnFzuiddMpRgADGjt5K40eLfWH", "SHhX4ewjms9uTrYPb67M3kcJYvMMYH9aK6aXur24");
 //
