@@ -56,6 +56,7 @@ public class MyMainActivity extends AppCompatActivity {
         Fabric.with(this, new Twitter(HelperFunctions.authConfig));
         Fabric.with(this, new TweetUi());
         //Fabric.with(this, new TweetComposer(), new Crashlytics());
+        
 
         HelperFunctions.currentSession = Twitter.getSessionManager().getActiveSession();
 
